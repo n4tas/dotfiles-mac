@@ -1,0 +1,75 @@
+# themes
+
+# theme = catppuccin-mocha
+# theme = rose pine 
+theme = vague
+# theme = Github Dark
+# theme = Kanagawa Wave
+# theme = Mellow
+# theme = MaterialOcean
+# theme = Horizon
+# theme = Ayu Mirage
+# theme = iceberg-dark
+# theme = nord
+# theme = Xcode Dark hc
+# theme = Xcode Dark 
+# theme = Xcode WWDC
+# theme = sakura
+
+
+# font
+font-size = 18
+
+# font-family = CaskaydiaCove Nerd Font
+font-family = JetBrains Mono 
+font-thicken = true
+
+# font-family = FiraCode Nerd Font Mono
+# font-family-bold = Bold
+
+# font-family = SF Mono
+# font-family = Menlo
+
+# background
+background-blur-radius = 40 
+background-opacity = 0.9
+
+# window settings
+window-decoration = true
+window-theme = ghostty
+window-padding-balance = true
+window-padding-x = 15
+window-padding-y = 5
+
+# ghostty icon
+# macos-icon = official
+macos-icon = paper
+# macos-icon = blueprint
+# macos-icon = holographic
+# macos-icon = retro
+# macos-icon = glass
+
+# misc
+mouse-hide-while-typing = true
+bold-is-bright = true
+auto-update = download
+auto-update-channel = stable
+macos-option-as-alt=true
+keybind = shift+enter=text:\n
+window-theme = "auto"
+macos-titlebar-style = tabs
+
+
+# pane/split settings
+unfocused-split-opacity = 0.4
+split-divider-color = #6e738d
+
+keybind = performable:ctrl+c=copy_to_clipboard
+keybind = performable:ctrl+v=paste_from_clipboard
+keybind = ctrl+j=scroll_page_down
+keybind = ctrl+k=scroll_page_up
+
+keybind = ctrl+h=unbind
+keybind = ctrl+l=unbind
+keybind = ctrl+j=unbind
+keybind = ctrl+k=unbind
