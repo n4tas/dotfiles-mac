@@ -1,19 +1,58 @@
-# Reference: https://github.com/i3/i3/blob/next/etc/config
 start-at-login = true
 config-version = 2
 
 # In i3, all workspaces are phantom
 persistent-workspaces = []
 
-# i3 doesn't have "normalizations" feature that why we disable them here.
-# But the feature is very helpful.
-# Normalizations eliminate all sorts of weird tree configurations that don't make sense.
-# Give normalizations a chance and enable them back.
+# Normalizations
+
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
+# New windows always tile and split — never stack beneath existing ones
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
 # Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Gaps between windows
+[gaps]
+inner.horizontal = 5
+inner.vertical =   5
+outer.left =       30
+outer.bottom =     40
+outer.top =        15
+outer.right =      30
+
+
+# ─── Auto-assign apps to workspaces ───────────────────────────────────────────
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Ghostty'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Finder'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Safari'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Claude'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Reminders'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Spotify'
+run = 'move-node-to-workspace 10'
+
 [mode.main.binding]
     # focus: h j k l = left down up right
     alt-h =         'focus --boundaries-action wrap-around-the-workspace left'
@@ -27,26 +66,34 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
+    # Turn off hiding keybind
+    cmd-h = []
+    cmd-alt-h = []
+
+    # Close (cmd+q equivalent)
+    alt-q = 'exec-and-forget osascript -e "tell application \"System Events\" to keystroke \"q\" using command down"'
+
     # app launches
     alt-shift-b = 'exec-and-forget open -a "Safari"'
+
     alt-enter = 'exec-and-forget open -na "Ghostty"'
-    alt-shift-n = 'exec-and-forget open -a "Notion"'
-    alt-shift-f = 'exec-and-forget open -a "Finder"'
-    alt-shift-m = 'exec-and-forget open -a "Spotify"'
-    alt-shift-v = 'exec-and-forget open -a "System Settings"'
 
-    # split/layout
-    alt-slash = 'join-with down'
-    alt-v = 'join-with right'
+    alt-shift-f = '''exec-and-forget osascript -e '
+    tell application "Finder"
+        make new Finder window
+        activate
+    end tell'
+    '''
 
-    alt-f = 'fullscreen'
+    alt-shift-m = 'exec-and-forget open -na "Spotify"'
 
-    # alt-s = 'layout v_accordion'
-    # alt-w = 'layout h_accordion'
-    alt-e = 'layout tiles horizontal vertical'
+    alt-shift-v = 'exec-and-forget open -na "System Preferences"'
 
-    alt-shift-space = 'layout floating tiling'
+    # Layout
+    alt-f           = 'fullscreen'
+    alt-e           = 'layout tiles horizontal vertical'
 
+    # Workspaces - switch
     alt-1 = 'workspace 1'
     alt-2 = 'workspace 2'
     alt-3 = 'workspace 3'
@@ -58,24 +105,30 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
     alt-9 = 'workspace 9'
     alt-0 = 'workspace 10'
 
-    alt-shift-1 = 'move-node-to-workspace 1'
-    alt-shift-2 = 'move-node-to-workspace 2'
-    alt-shift-3 = 'move-node-to-workspace 3'
-    alt-shift-4 = 'move-node-to-workspace 4'
-    alt-shift-5 = 'move-node-to-workspace 5'
-    alt-shift-6 = 'move-node-to-workspace 6'
-    alt-shift-7 = 'move-node-to-workspace 7'
-    alt-shift-8 = 'move-node-to-workspace 8'
-    alt-shift-9 = 'move-node-to-workspace 9'
-    alt-shift-0 = 'move-node-to-workspace 10'
+    # Workspaces - move node and follow
+    alt-shift-1 = ['move-node-to-workspace 1',  'workspace 1']
+    alt-shift-2 = ['move-node-to-workspace 2',  'workspace 2']
+    alt-shift-3 = ['move-node-to-workspace 3',  'workspace 3']
+    alt-shift-4 = ['move-node-to-workspace 4',  'workspace 4']
+    alt-shift-5 = ['move-node-to-workspace 5',  'workspace 5']
+    alt-shift-6 = ['move-node-to-workspace 6',  'workspace 6']
+    alt-shift-7 = ['move-node-to-workspace 7',  'workspace 7']
+    alt-shift-8 = ['move-node-to-workspace 8',  'workspace 8']
+    alt-shift-9 = ['move-node-to-workspace 9',  'workspace 9']
+    alt-shift-0 = ['move-node-to-workspace 10', 'workspace 10']
 
     alt-shift-c = 'reload-config'
     alt-r = 'mode resize'
 
 [mode.resize.binding]
-    h = 'resize width -50'
-    j = 'resize height +50'
-    k = 'resize height -50'
-    l = 'resize width +50'
+    h     = 'resize width -30'
+    j     = 'resize height +30'
+    k     = 'resize height -30'
+    l     = 'resize width +30'
     enter = 'mode main'
-    esc = 'mode main'
+    esc   = 'mode main'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
