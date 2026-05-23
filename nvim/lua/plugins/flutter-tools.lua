@@ -1,12 +1,9 @@
--- Flutter development tools
 return {
-    "akinsho/flutter-tools.nvim",
+    "nvim-flutter/flutter-tools.nvim",
     ft = { "dart" },
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "neovim/nvim-lspconfig",
         "stevearc/dressing.nvim",
-        -- "mfussenegger/nvim-dap",
     },
     config = function()
         require("flutter-tools").setup({
@@ -14,6 +11,7 @@ return {
                 border = "rounded",
                 notification_style = "native",
             },
+
             decorations = {
                 statusline = {
                     app_version = false,
@@ -21,57 +19,67 @@ return {
                     project_config = false,
                 },
             },
+
             debugger = {
                 enabled = false,
-                exception_breakpoints = {},
-                evaluate_to_string_in_debug_views = true,
             },
+
+            -- Usually unnecessary if `flutter` is already in PATH
             flutter_path = vim.fn.exepath("flutter") ~= "" and vim.fn.exepath("flutter") or nil,
+
             root_patterns = { ".git", "pubspec.yaml" },
             fvm = false,
-            default_run_args = nil,
+
             widget_guides = {
                 enabled = false,
             },
+
             closing_tags = {
                 highlight = "ErrorMsg",
                 prefix = ">",
                 priority = 10,
                 enabled = true,
             },
+
             dev_log = {
                 enabled = true,
-                filter = nil,
                 notify_errors = false,
                 open_cmd = "15split",
-                focus_on_open = true,
+                focus_on_open = false,
             },
+
             dev_tools = {
                 autostart = false,
                 auto_open_browser = false,
             },
+
             outline = {
                 open_cmd = "30vnew",
                 auto_open = false,
             },
+
             lsp = {
-                color = {
-                    enabled = false,
-                    background = false,
-                    background_color = nil,
-                    foreground = false,
-                    virtual_text = true,
-                    virtual_text_str = "■",
-                },
                 settings = {
                     showTodos = true,
                     completeFunctionCalls = true,
-                    analysisExcludedFolders = { "<path-to-flutter-sdk-packages>" },
                     renameFilesWithClasses = "prompt",
                     enableSnippets = true,
                     updateImportsOnRename = true,
                 },
             },
         })
+
+        local map = vim.keymap.set
+
+        map("n", "<leader>fr", "<cmd>FlutterRun<cr>", { desc = "Flutter run" })
+        map("n", "<leader>fq", "<cmd>FlutterQuit<cr>", { desc = "Flutter quit" })
+        map("n", "<leader>fR", "<cmd>FlutterRestart<cr>", { desc = "Flutter restart" })
+        map("n", "<leader>fl", "<cmd>FlutterReload<cr>", { desc = "Flutter hot reload" })
+        map("n", "<leader>fd", "<cmd>FlutterDevices<cr>", { desc = "Flutter devices" })
+        map("n", "<leader>fe", "<cmd>FlutterEmulators<cr>", { desc = "Flutter emulators" })
+        map("n", "<leader>fo", "<cmd>FlutterOutlineToggle<cr>", { desc = "Flutter outline" })
+        map("n", "<leader>fg", "<cmd>FlutterLogToggle<cr>", { desc = "Flutter log" })
+        map("n", "<leader>fp", "<cmd>FlutterPubGet<cr>", { desc = "Flutter pub get" })
+        map("n", "<leader>ft", "<cmd>FlutterDevTools<cr>", { desc = "Flutter DevTools" })
     end,
 }
